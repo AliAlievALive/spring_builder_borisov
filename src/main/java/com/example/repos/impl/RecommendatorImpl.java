@@ -1,5 +1,6 @@
 package com.example.repos.impl;
 
+@Singleton
 public class RecommendatorImpl implements Recommendator {
     @InjectProperty("tea")
     private String medicine;

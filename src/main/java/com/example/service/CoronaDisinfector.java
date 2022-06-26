@@ -8,8 +8,10 @@ import com.example.repos.impl.PolicemanImpl;
 import com.example.repos.Room;
 
 public class CoronaDisinfector {
-    private final Announcer announcer = ObjectFactory.getInstance().createObject(Announcer.class);
-    private final Policeman policeman = ObjectFactory.getInstance().createObject(Policeman.class);
+    @InjectByType
+    private Announcer announcer;
+    @InjectByType
+    private Policeman policeman;
 
     public void start(Room room) {
         announcer.announce("Начинаем дезинфекцию, все вон!");
