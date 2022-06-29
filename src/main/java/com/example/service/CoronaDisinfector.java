@@ -1,10 +1,7 @@
 package com.example.service;
 
-import com.example.ObjectFactory;
 import com.example.repos.Announcer;
 import com.example.repos.Policeman;
-import com.example.repos.impl.ConsoleAnnouncer;
-import com.example.repos.impl.PolicemanImpl;
 import com.example.repos.Room;
 
 public class CoronaDisinfector {

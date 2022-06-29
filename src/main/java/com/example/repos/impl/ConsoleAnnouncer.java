@@ -1,10 +1,11 @@
 package com.example.repos.impl;
 
-import com.example.ObjectFactory;
 import com.example.repos.Announcer;
+import com.example.service.InjectByType;
 
 public class ConsoleAnnouncer implements Announcer {
-    private final Recommendator recommendator = ObjectFactory.getInstance().createObject(Recommendator.class);
+    @InjectByType
+    private Recommendator recommendator;
     @Override
     public void announce(String message) {
         System.out.println(message);

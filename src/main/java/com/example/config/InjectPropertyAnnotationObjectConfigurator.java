@@ -1,5 +1,6 @@
 package com.example.config;
 
+import com.example.ApplicationContext;
 import com.example.repos.impl.InjectProperty;
 import lombok.SneakyThrows;
 
@@ -24,7 +25,7 @@ public class InjectPropertyAnnotationObjectConfigurator implements ObjectConfigu
 
     @Override
     @SneakyThrows
-    public void configure(Object t) {
+    public void configure(Object t, ApplicationContext context) {
         Class<?> implClass = t.getClass();
         for (Field field : implClass.getDeclaredFields()) {
             InjectProperty annotation = field.getAnnotation(InjectProperty.class);
