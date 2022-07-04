@@ -8,7 +8,7 @@ import javax.annotation.PostConstruct;
 public class PolicemanImpl implements Policeman {
 
     @InjectByType
-    private RecommendatorImpl recommendator;
+    private Recommendator recommendator;
 
     @PostConstruct
     public void init() {

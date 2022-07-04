@@ -1,6 +1,7 @@
 package com.example;
 
 import com.example.config.ObjectConfigurator;
+import com.example.repos.ProxyConfigurator;
 import lombok.SneakyThrows;
 
 import javax.annotation.PostConstruct;
@@ -11,6 +12,7 @@ import java.util.List;
 
 public class ObjectFactory {
     private final List<ObjectConfigurator> configurators = new ArrayList<>();
+    private final List<ProxyConfigurator> proxyConfigurators = new ArrayList<>();
     private final ApplicationContext context;
 
     @SneakyThrows
@@ -18,6 +20,9 @@ public class ObjectFactory {
         this.context = context;
         for (Class<? extends ObjectConfigurator> aClass : context.getConfig().getScanner().getSubTypesOf(ObjectConfigurator.class)) {
             configurators.add(aClass.getDeclaredConstructor().newInstance());
+        }
+        for (Class<? extends ProxyConfigurator> aClass : context.getConfig().getScanner().getSubTypesOf(ProxyConfigurator.class)) {
+            proxyConfigurators.add(aClass.getDeclaredConstructor().newInstance());
         }
     }
 
@@ -30,6 +35,15 @@ public class ObjectFactory {
 
         invokeInit(implClass, t);
 
+        t = wrapWithProxyIfNeeded(implClass, t);
+
+        return t;
+    }
+
+    private <T> T wrapWithProxyIfNeeded(Class<T> implClass, T t) {
+        for (ProxyConfigurator proxyConfigurator : proxyConfigurators) {
+            t = (T) proxyConfigurator.replaceWithProxyIfNeeded(t, implClass);
+        }
         return t;
     }
 
